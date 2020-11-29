@@ -1,4 +1,4 @@
-package code.sort.simple;
+package sort.simple;
 
 /**
  * @author young

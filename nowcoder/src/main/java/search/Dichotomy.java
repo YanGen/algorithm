@@ -1,6 +1,4 @@
-package code.search;
-
-import java.util.Scanner;
+package search;
 
 /**
  * @author young
