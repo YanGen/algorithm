@@ -35,7 +35,5 @@ public class Twosum {
         int []nums = new int[]{2, 7, 11, 15};
         int target = 22;
         System.out.println(Arrays.toString(twoSum(nums,target)));
-        
-
     }
 }
