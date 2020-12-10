@@ -28,16 +28,36 @@ public class LongestPalindrome {
         int sl = s.length();
         String max = "";
         boolean[][] dp = new boolean[sl][sl];
+        boolean[][] exclude = new boolean[sl][2];
+
+        char[] sc = s.toCharArray();
 
         for (int offset = 0; offset < sl; offset++) {
+            // al 一轮循环如果已经更改了max字符串那么同一offset就不要进来更改了
+            boolean al = false;
+            int j;
             for (int i = 0; i + offset < sl; i++) {
-                int j = i + offset;
-                if (i == j || j - 1 == i) {
-                    dp[i][j] = s.charAt(i) == s.charAt(j);
-                }else  {
-                    dp[i][j] = dp[i+1][j-1] && s.charAt(i) == s.charAt(j);
+                j = i + offset;
+                int e =(i + j)%2;
+                if (( e== 0&&exclude[(i+j)/2][1])||(e != 0&&exclude[(i+j)/2][0])) {
+                     continue;
                 }
-                max = dp[i][j]&&offset + 1>max.length() ? s.substring(i,j+1):max;
+                if (offset < 2) {
+                    dp[i][j] = sc[i] == sc[j];
+                }else  {
+                    dp[i][j] = dp[i+1][j-1] && sc[i] == sc[j];
+                    if (!dp[i][j]) {
+                        if ((i + j)%2 == 0) {
+                            exclude[(i+j)/2][1] = true;
+                        }else {
+                            exclude[(i+j)/2][0] = true;
+                        }
+                    }
+                }
+                if (!al&&dp[i][j]&&offset + 1>max.length()) {
+                    max = s.substring(i,j+1);
+                    al = true;
+                }
             }
         }
         return max;
